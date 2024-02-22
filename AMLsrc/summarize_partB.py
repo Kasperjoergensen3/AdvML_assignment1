@@ -4,26 +4,29 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
+from tqdm import tqdm
 
 
 from AMLsrc.utilities.load_model import load_model, load_flow_model
 from AMLsrc.data.dataloader import get_MNIST_dataloader
 
 #set seed
+print("Setting seed")
 torch.manual_seed(1236)
+batch_size=32
+_, mnist_test_loader = get_MNIST_dataloader(batch_size=batch_size, transform_description='standard')
 
-_, mnist_test_loader = get_MNIST_dataloader(batch_size=32, transform_description='standard')
 
-
-model = ['',load_model(Path('models/partB_VAE_test_version/1708100371')),
-        load_flow_model(Path('models/partB_flow_test_version/1708099010')),
-        load_flow_model(Path('models/partB_ddpm_v1/1708259498'))
+model = ['',load_model(Path('models/partB_VAE_v1/1708260893')),
+       #load_flow_model(Path('models/partB_flow_test_version/1708116431')),
+        load_flow_model(Path('models/partB_flow_v1/1708640122')),
+       load_flow_model(Path('models/partB_ddpm_v1/1708259498'))
         ]
 
 titles = ['MNIST', 'VAE', 'Flow', 'DDMP']
 
 fig, ax = plt.subplots(4, 8, figsize=(10, 5))
-for i in range(4):
+for i in range(len(model)):
     print(i)
     for j in range(8):
         if i == 0:
@@ -32,8 +35,13 @@ for i in range(4):
             with torch.no_grad():
                 if i == 3:
                     sample = model[i].sample((1,784)).view(28, 28)
+                    # convert to 0-1 range
+                    sample = (sample + 1) / 2
                 else:
                     sample = model[i].sample(1).view(28, 28)
+                #crop to 0-1 range
+                sample = torch.clamp(sample, 0, 1)
+        print(sample.min(), sample.max())
         ax[i, j].imshow(sample, cmap='gray')
         if j == 0:
             ax[i, j].set_ylabel(titles[i], fontsize=15)
@@ -47,57 +55,56 @@ for i in range(4):
 plt.subplots_adjust(wspace=0, hspace=0)
 plt.savefig('reports/PartB_samples.png', bbox_inches='tight', dpi=300)
 
-
-# compute FID for each model
-# generate two slightly overlapping image intensity distributions
-# imgs_dist1 = torch.randint(0, 200, (100, 3, 299, 299), dtype=torch.uint8)
-test_data = []
-for x, _ in mnist_test_loader:
-    test_data.append(x)
-test_data = torch.cat(test_data, 0).unsqueeze(1)
-print(type(test_data))
-print(test_data.shape)
-
-
-# make samples from models
-vae_samples = model[1].sample(10000)
-print(type(vae_samples))
-print(vae_samples.shape)
-
-# flow_samples = model[2].sample(10000).view(10000, 1, 28, 28)
-# print(type(flow_samples))
-# print(flow_samples.shape)
-
-# ddpm_samples = model[3].sample(10000)
-
-
+# compute FID and KID
 import torch
 from torchmetrics.image.kid import KernelInceptionDistance
+from torchmetrics.image.fid import FrechetInceptionDistance
 
-#set up for cuda
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+#write header to txt file
+with open('reports/PartB_FID_KID.txt', 'w') as f:
+    f.write('Model, KID_mean, KID_std, FID\n')
 
-model_samples = vae_samples
-model_samples = model_samples.to(device)
-test_data = test_data.to(device)
+with torch.no_grad():
+    #get test_data
+    test_data = []
+    n=256
+    for x, _ in mnist_test_loader:
+        test_data.append(x)
+        if len(test_data) >=n // batch_size:
+            break
+    test_data = torch.cat(test_data, 0).unsqueeze(1)[:n].repeat(1,3,1,1)
+    print("Test data shape")
+    print(test_data.shape)
 
-kid = KernelInceptionDistance(subset_size=50, normalize=True)
-# generate two slightly overlapping image intensity distributions
-imgs_dist1 = test_data.repeat(1,3,1,1)
-imgs_dist2 = model_samples.repeat(1, 3, 1, 1)
-kid.update(imgs_dist1, real=True)
-kid.update(imgs_dist2, real=False)
-mean_kid, std_kid = kid.compute()
 
-print(f"The mean KID {mean_kid} +- {std_kid}")
+    models = model[1:]
+    for i in range(len(models)):
+        if i == 2:
+            model_samples = []
+            for j in tqdm(range(n)):
+                model_samples.append(models[i].sample((1,784)).view(1, 1, 28, 28))
+            model_samples = torch.cat(model_samples, 0)
+            model_samples = (model_samples + 1) / 2
+            model_samples = model_samples.repeat(1,3,1,1)
+        else:
+            model_samples = models[i].sample(n).view(n, 1, 28, 28)
+            model_samples = model_samples.repeat(1,3,1,1)
+        #crop to 0-1 range
+        model_samples = torch.clamp(model_samples, 0, 1)
+        print(f"Calculating KID for {titles[i+1]}")
+        print(model_samples.shape)
+        kid = KernelInceptionDistance(subset_size=50, normalize=True)
+        kid.update(test_data, real=True)
+        kid.update(model_samples, real=False)
+        mean_kid, std_kid = kid.compute()
+        print(f"The mean KID {mean_kid} +- {std_kid}")
+        del kid
+        print(f"Calculating FID for {titles[i+1]}")
+        fid = FrechetInceptionDistance(feature=64, normalize=True)
+        fid.update(test_data, real=True)
+        fid.update(model_samples, real=False)
+        fid = fid.compute()
+        print(f"FID {fid}")
 
-del kid
-
-# from torchmetrics.image.fid import FrechetInceptionDistance
-# fid = FrechetInceptionDistance(feature=64, normalize=True)
-# # generate two slightly overlapping image intensity distributions
-# fid.update(imgs_dist1, real=True)
-# fid.update(imgs_dist2, real=False)
-# fid = fid.compute()
-# print(f"The mean KID {mean_kid} +- {std_kid} , and FID {fid}")
-
+        with open('reports/PartB_FID_KID.txt', 'a') as f:
+            f.write(f'{titles[i+1]}, {mean_kid}, {std_kid}, {fid}\n')

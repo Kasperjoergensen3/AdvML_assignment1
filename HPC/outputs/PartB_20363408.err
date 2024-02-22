@@ -1,0 +1,41 @@
+/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/summarize_partB.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+Traceback (most recent call last):
+  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/summarize_partB.py", line 82, in <module>
+    fid.update(model_samples, real=False)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/metric.py", line 475, in wrapped_func
+    raise err
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/metric.py", line 465, in wrapped_func
+    update(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/image/fid.py", line 335, in update
+    features = self.inception(imgs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/image/fid.py", line 155, in forward
+    out = self._torch_fidelity_forward(x)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/image/fid.py", line 90, in _torch_fidelity_forward
+    x = self.Conv2d_1a_3x3(x)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch_fidelity/feature_extractor_inceptionv3.py", line 208, in forward
+    x = self.conv(x)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 460, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 456, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Given groups=1, weight of size [32, 3, 3, 3], expected input[10000, 1, 299, 299] to have 3 channels, but got 1 channels instead
+make: *** [eval_partB] Error 1

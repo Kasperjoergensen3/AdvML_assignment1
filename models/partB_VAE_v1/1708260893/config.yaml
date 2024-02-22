@@ -1,0 +1,16 @@
+batch_size: 128
+config: AMLsrc/configs/partB_VAE.yaml
+decoder: ContinuesBernoulliDecoder
+device: cuda
+dim: 784
+encoder: GaussianEncoder
+encoder_decoder_nets: LinearEncoderDecoderNets
+epochs: 50
+latent_dim: 2
+lr: 0.001
+model: VAE
+name: partB_VAE_v1
+prior: VampPrior
+seed: 42
+transform_description: flatten
+version: v1

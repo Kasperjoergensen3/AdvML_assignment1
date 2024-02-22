@@ -1,0 +1,105 @@
+/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/bin/python3 AMLsrc/summarize_partB.py
+Setting seed
+Test data shape
+torch.Size([256, 3, 28, 28])
+Calculating KID for VAE
+torch.Size([100, 3, 28, 28])
+The mean KID 0.20083823800086975 +- 0.007613858673721552
+Calculating FID for VAE
+FID 4.344821929931641
+Calculating KID for Flow
+torch.Size([100, 3, 28, 28])
+The mean KID 0.1485886424779892 +- 0.007916219532489777
+Calculating FID for Flow
+FID 0.6464470028877258
+Calculating KID for DDMP
+torch.Size([256, 3, 28, 28])
+The mean KID 0.012189987115561962 +- 0.00440742913633585
+Calculating FID for DDMP
+FID 0.018169784918427467
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@hpc.dtu.dk>
+Subject: Job 20365047: <PartA> in cluster <dcc> Done
+
+Job <PartA> was submitted from host <gbarlogin1> by user <s204231> in cluster <dcc> at Thu Feb 22 22:37:58 2024
+Job was executed on host(s) <4*n-62-30-24>, in queue <hpc>, as user <s204231> in cluster <dcc> at Thu Feb 22 22:37:58 2024
+</zhome/4b/e/155339> was used as the home directory.
+</zhome/4b/e/155339/Desktop/advML/AdvML_assignment1> was used as the working directory.
+Started at Thu Feb 22 22:37:58 2024
+Terminated at Thu Feb 22 23:08:36 2024
+Results reported at Thu Feb 22 23:08:36 2024
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+### General options
+### –- specify queue --
+#BSUB -q hpc
+### -- set the job Name --
+#BSUB -J PartA
+### -- ask for number of cores (default: 1) --
+#BSUB -n 4
+### -- Select the resources: 1 gpu in exclusive process mode --
+##BSUB -gpu "num=1:mode=exclusive_process"
+### -- set walltime limit: hh:mm --  maximum 24 hours for GPU-queues right now
+#BSUB -W 02:00
+# request 5GB of system-memory
+#BSUB -R "rusage[mem=5GB]"
+### -- set the email address --
+# please uncomment the following line and put in your e-mail address,
+# if you want to receive e-mail notifications on a non-default address
+##BSUB -u your_email_address
+### -- send notification at start --
+##BSUB -B
+### -- send notification at completion--
+##BSUB -N
+### -- Specify the output and error file. %J is the job-id --
+### -- -o and -e mean append, -oo and -eo mean overwrite --
+#BSUB -o HPC/outputs/PartA_%J.out
+#BSUB -e HPC/outputs/PartA_%J.err
+# -- end of LSF options --
+
+#nvidia-smi
+# Load the cuda module
+#module load cuda/11.6
+
+# Your Conda initialization step (path might be different based on your installation)
+source /zhome/4b/e/155339/miniconda3/etc/profile.d/conda.sh
+#activate conda environment
+conda activate Denoising_EEG
+
+# WANDB_API_KEY=${WANDB_API_KEY}
+# # Log in to WandB
+# wandb login $WANDB_API_KEY
+#run the training script
+#make train_gaussian_gpu
+
+make eval_partB
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   1832.09 sec.
+    Max Memory :                                 3880 MB
+    Average Memory :                             1100.29 MB
+    Total Requested Memory :                     20480.00 MB
+    Delta Memory :                               16600.00 MB
+    Max Swap :                                   -
+    Max Processes :                              5
+    Max Threads :                                7
+    Run time :                                   1868 sec.
+    Turnaround time :                            1838 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <HPC/outputs/PartA_20365047.err> for stderr output of this job.
+

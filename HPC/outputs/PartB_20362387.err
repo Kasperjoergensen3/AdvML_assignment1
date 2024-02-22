@@ -1,0 +1,12 @@
+Loaded module: cuda/11.6
+/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/summarize_partB.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/utilities/prints.py:43: UserWarning: Metric `Kernel Inception Distance` will save all extracted features in buffer. For large datasets this may lead to large memory footprint.
+  warnings.warn(*args, **kwargs)  # noqa: B028
+make: *** [eval_partB] Killed

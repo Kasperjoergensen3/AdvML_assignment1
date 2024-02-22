@@ -1,13 +1,0 @@
-Loaded module: cuda/11.6
-Training:   0%|          | 0/46900 [00:00<?, ?it/s]Traceback (most recent call last):
-  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/train_PartB.py", line 76, in <module>
-    train(model, optimizer, mnist_train_loader, args.epochs, args.device)
-  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/utilities/trainer.py", line 68, in train_flow
-    loss = model.loss(x)
-  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/models/ddpm.py", line 104, in loss
-    return self.negative_elbo(x).mean()
-  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/models/ddpm.py", line 59, in negative_elbo
-    x_t = sqrt_alpha_bar_t*x+sqrt_one_minus_alpha_bar_t*eps
-RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
-Training:   0%|          | 0/46900 [00:01<?, ?it/s]
-make: *** [run_partB] Error 1

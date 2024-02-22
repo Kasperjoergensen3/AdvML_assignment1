@@ -1,0 +1,15 @@
+/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/summarize_partB.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+Traceback (most recent call last):
+  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/summarize_partB.py", line 70, in <module>
+    model_samples = models[i].sample(10000).view(10000, 1, 28, 28)
+  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/models/ddpm.py", line 90, in sample
+    t_ = t*torch.ones(shape[0], 1).to(self.alpha.device)
+TypeError: 'int' object is not subscriptable
+make: *** [eval_partB] Error 1

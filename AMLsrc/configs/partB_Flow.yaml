@@ -2,12 +2,12 @@ name: partB_flow
 
 # learning hyperparameters
 batch_size: 128
-epochs: 100
+epochs: 10
 lr: 0.001
 
 #Model
 model: MNISTFlow
-num_transformations: 14
+num_transformations: 20
 num_hidden: 256
 masking: checkerboard
 
