@@ -1,0 +1,14 @@
+batch_size: 128
+config: src/configs/partB_Flow.yaml
+device: cpu
+dim: 784
+epochs: 5
+lr: 0.001
+masking: checkerboard
+model: MNISTFlow
+name: partB_flow_test_version
+num_hidden: 8
+num_transformations: 30
+seed: 42
+transform_description: dequantized
+version: test_version

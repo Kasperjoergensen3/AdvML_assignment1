@@ -1,0 +1,15 @@
+batch_size: 128
+config: src/configs/partA_GaussianPrior.yaml
+decoder: BernoulliDecoder
+device: cuda
+encoder: GaussianEncoder
+encoder_decoder_nets: LinearEncoderDecoderNets
+epochs: 20
+latent_dim: 2
+lr: 0.001
+model: VAE
+name: partA_Gaussian_v1
+prior: GaussianPrior
+seed: 1234
+transform_description: binarized
+version: v1

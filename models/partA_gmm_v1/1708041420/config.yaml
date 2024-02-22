@@ -1,0 +1,15 @@
+batch_size: 128
+config: src/configs/partA_GMMPrior.yaml
+decoder: BernoulliDecoder
+device: cuda
+encoder: GaussianEncoder
+encoder_decoder_nets: LinearEncoderDecoderNets
+epochs: 20
+latent_dim: 2
+lr: 0.001
+model: VAE
+name: partA_gmm_v1
+prior: GaussianMixturePrior
+seed: 456
+transform_description: binarized
+version: v1

@@ -1,0 +1,6 @@
+Loaded module: cuda/11.6
+Traceback (most recent call last):
+  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/train_PartB.py", line 29, in <module>
+    with open(args.config, "r") as stream:
+FileNotFoundError: [Errno 2] No such file or directory: 'src/configs/partB_DDPM.yaml'
+make: *** [run_partB] Error 1
