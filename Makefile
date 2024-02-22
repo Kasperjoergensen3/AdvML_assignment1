@@ -34,8 +34,8 @@ run_partB:
 #$(PYTHON_INTERPRETER) AMLsrc/train_PartB.py --config "AMLsrc/configs/partB_DDPM.yaml" --version v1
 #$(PYTHON_INTERPRETER) AMLsrc/train_PartB.py --config "AMLsrc/configs/partB_Flow.yaml" --version v1
 	$(PYTHON_INTERPRETER) AMLsrc/train_PartB.py --config "AMLsrc/configs/partB_VAE.yaml" --version v1
-
-	
+eval_partB:
+	$(PYTHON_INTERPRETER) AMLsrc/summarize_partB.py
 run_partA:
 	sh partA.sh
 

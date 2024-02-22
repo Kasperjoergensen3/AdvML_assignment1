@@ -1,0 +1,36 @@
+Loaded module: cuda/11.6
+/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/summarize_partB.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/utilities/prints.py:43: UserWarning: Metric `Kernel Inception Distance` will save all extracted features in buffer. For large datasets this may lead to large memory footprint.
+  warnings.warn(*args, **kwargs)  # noqa: B028
+Downloading: "https://github.com/toshas/torch-fidelity/releases/download/v0.2.0/weights-inception-2015-12-05-6726825d.pth" to /zhome/4b/e/155339/.cache/torch/hub/checkpoints/weights-inception-2015-12-05-6726825d.pth
+  0%|          | 0.00/91.2M [00:00<?, ?B/s]  8%|▊         | 6.95M/91.2M [00:00<00:01, 72.8MB/s] 20%|█▉        | 18.0M/91.2M [00:00<00:00, 98.4MB/s] 32%|███▏      | 29.0M/91.2M [00:00<00:00, 106MB/s]  44%|████▍     | 40.1M/91.2M [00:00<00:00, 110MB/s] 56%|█████▌    | 51.1M/91.2M [00:00<00:00, 112MB/s] 68%|██████▊   | 62.3M/91.2M [00:00<00:00, 114MB/s] 80%|████████  | 73.2M/91.2M [00:00<00:00, 114MB/s] 93%|█████████▎| 84.4M/91.2M [00:00<00:00, 115MB/s]100%|██████████| 91.2M/91.2M [00:00<00:00, 111MB/s]
+Traceback (most recent call last):
+  File "/zhome/4b/e/155339/Desktop/advML/AdvML_assignment1/AMLsrc/summarize_partB.py", line 88, in <module>
+    kid.update(imgs_dist1, real=True)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/metric.py", line 475, in wrapped_func
+    raise err
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/metric.py", line 465, in wrapped_func
+    update(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/image/kid.py", line 242, in update
+    features = self.inception(imgs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/image/fid.py", line 155, in forward
+    out = self._torch_fidelity_forward(x)
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torchmetrics/image/fid.py", line 83, in _torch_fidelity_forward
+    x = interpolate_bilinear_2d_like_tensorflow1x(
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch_fidelity/interpolate_compat_tensorflow.py", line 139, in interpolate_bilinear_2d_like_tensorflow1x
+    out = resample_manually()
+  File "/zhome/4b/e/155339/miniconda3/envs/Denoising_EEG/lib/python3.10/site-packages/torch_fidelity/interpolate_compat_tensorflow.py", line 128, in resample_manually
+    in_01 = input[:, :, grid_y_lo, :][:, :, :, grid_x_hi]
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 9.99 GiB. GPU 0 has a total capacity of 15.77 GiB of which 4.14 GiB is free. Including non-PyTorch memory, this process has 11.63 GiB memory in use. Of the allocated memory 11.27 GiB is allocated by PyTorch, and 5.45 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+make: *** [eval_partB] Error 1

@@ -55,24 +55,33 @@ test_data = []
 for x, _ in mnist_test_loader:
     test_data.append(x)
 test_data = torch.cat(test_data, 0).unsqueeze(1)
+print(type(test_data))
 print(test_data.shape)
+
+
 # make samples from models
 vae_samples = model[1].sample(10000)
+print(type(vae_samples))
 print(vae_samples.shape)
-flow_samples = model[2].sample(10000).view(10000, 1, 28, 28)
-#print(flow_samples.shape)
-# ddpm_samples = model[3].sample(10000)
-#print(ddpm_samples.shape)
 
-#print(flow_samples.shape)
+# flow_samples = model[2].sample(10000).view(10000, 1, 28, 28)
+# print(type(flow_samples))
+# print(flow_samples.shape)
+
+# ddpm_samples = model[3].sample(10000)
 
 
 import torch
 from torchmetrics.image.kid import KernelInceptionDistance
 
-model_samples = vae_samples
+#set up for cuda
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-kid = KernelInceptionDistance(subset_size=50)
+model_samples = vae_samples
+model_samples = model_samples.to(device)
+test_data = test_data.to(device)
+
+kid = KernelInceptionDistance(subset_size=50, normalize=True)
 # generate two slightly overlapping image intensity distributions
 imgs_dist1 = test_data.repeat(1,3,1,1)
 imgs_dist2 = model_samples.repeat(1, 3, 1, 1)
